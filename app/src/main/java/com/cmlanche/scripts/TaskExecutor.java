@@ -122,7 +122,7 @@ public class TaskExecutor {
                         } catch (Exception e) {
                             Logger.e("监控异常：" + e.getMessage(), e);
                         } finally {
-                            Utils.sleep(1000);
+                            Utils.sleep(1000 * 60);
                         }
                     }
                 }

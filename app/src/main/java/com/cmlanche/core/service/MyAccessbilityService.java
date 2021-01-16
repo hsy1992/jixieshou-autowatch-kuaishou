@@ -42,21 +42,21 @@ public class MyAccessbilityService extends AccessibilityService {
         String activeRootPkg = Utils.getRootPackageName(activeRoot);
 
         Map<String, AccessibilityNodeInfo> map = new HashMap<>();
-        if(activeRoot != null){
+        if (activeRoot != null) {
             map.put(activeRootPkg, activeRoot);
         }
 
         if (Build.VERSION.SDK_INT >= 21) {
             List<AccessibilityWindowInfo> windows = getWindows();
             for (AccessibilityWindowInfo w : windows) {
-                if(w.getRoot() == null || getPackageName().equals(Utils.getRootPackageName(w.getRoot()))) {
+                if (w.getRoot() == null || getPackageName().equals(Utils.getRootPackageName(w.getRoot()))) {
                     continue;
                 }
                 String rootPkg = Utils.getRootPackageName(w.getRoot());
-                if(getPackageName().equals(rootPkg)) {
+                if (getPackageName().equals(rootPkg)) {
                     continue;
                 }
-                if(rootPkg.equals(activeRootPkg)) {
+                if (rootPkg.equals(activeRootPkg)) {
                     continue;
                 }
                 map.put(rootPkg, w.getRoot());
@@ -65,7 +65,7 @@ public class MyAccessbilityService extends AccessibilityService {
         if (map.isEmpty()) {
             noRootCount++;
         } else {
-            if(!isWork) {
+            if (! isWork) {
                 MyApplication.getAppInstance().getMainActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -89,12 +89,12 @@ public class MyAccessbilityService extends AccessibilityService {
     }
 
     public boolean containsPkg(String pkg) {
-        if(StringUtil.isEmpty(pkg)) {
+        if (StringUtil.isEmpty(pkg)) {
             return false;
         }
         AccessibilityNodeInfo[] roots = getRoots();
-        for(AccessibilityNodeInfo root: roots) {
-            if(pkg.equals(Utils.getRootPackageName(root))) {
+        for (AccessibilityNodeInfo root : roots) {
+            if (pkg.equals(Utils.getRootPackageName(root))) {
                 return true;
             }
         }

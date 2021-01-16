@@ -9,14 +9,29 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi-v7a'//, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file( '../auto.jks')
+            keyAlias 'endless'
+            keyPassword 'haosiyuan'
+            storePassword 'haosiyuan'
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
+            signingConfig signingConfigs.release
         }
     }
 
@@ -34,6 +49,7 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+
 }
 
 dependencies {
@@ -47,7 +63,6 @@ dependencies {
         exclude group: 'org.ligboy.retrofit2', module: 'converter-fastjson'
     }
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.alibaba:fastjson:1.1.71.android'
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
     
     // leancloud end
@@ -65,4 +80,6 @@ dependencies {
     implementation files('libs/umeng-share-sina-simplify-6.9.6.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.6.jar')
     implementation files('libs/umeng-shareboard-widget-6.9.6.jar')
+    //fastJson
+    implementation 'com.alibaba:fastjson:1.1.72.android'
 }

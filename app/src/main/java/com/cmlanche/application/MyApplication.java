@@ -30,15 +30,11 @@ import com.cmlanche.jixieshou.R;
 import com.cmlanche.model.AppInfo;
 import com.cmlanche.model.TaskInfo;
 import com.cmlanche.scripts.TaskExecutor;
-import com.cmlanche.widget.PointView;
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import cn.leancloud.AVOSCloud;
 
@@ -96,7 +92,7 @@ public class MyApplication extends Application {
                 setFloatText("总执行时间：" + Utils.getTimeDescription(time));
                 break;
             case pause_byhand:
-                if(isStarted) {
+                if (isStarted) {
                     setFloatText("机械手已被您暂停");
                 }
                 break;
@@ -106,13 +102,13 @@ public class MyApplication extends Application {
                 }
                 break;
             case pause_becauseof_not_destination_page:
-                if(isStarted) {
+                if (isStarted) {
                     // String reason = (String) event.getData();
                     setFloatText("非目标页面，机械手已暂停");
                 }
                 break;
             case refresh_time:
-                if (!TaskExecutor.getInstance().isForcePause()) {
+                if (! TaskExecutor.getInstance().isForcePause()) {
                     setFloatText("已执行：" + event.getData());
                 }
                 break;
@@ -133,7 +129,7 @@ public class MyApplication extends Application {
 
     private void initUmeng() {
         try {
-            UMConfigure.init(getApplicationContext(), "你的友盟appid", "main", UMConfigure.DEVICE_TYPE_PHONE, null);
+            UMConfigure.init(getApplicationContext(), "5ff6655944bb94418a77bb59", "main", UMConfigure.DEVICE_TYPE_PHONE, null);
             MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
         } catch (Exception e) {
         }
@@ -141,7 +137,7 @@ public class MyApplication extends Application {
 
     private void initLeancloud() {
         try {
-            AVOSCloud.initialize("你的leancloud appid", "你的leancloud appsecret");
+            AVOSCloud.initialize("FOm2BMwrlmRHhLOx2Ryv2wnG-gzGzoHsz", "8OdNnQ6GHnfkNRWGkJb1BVcQ");
             new InitTask().execute();
         } catch (Exception e) {
             Logger.e(e.getMessage(), e);
@@ -234,7 +230,7 @@ public class MyApplication extends Application {
                     // 服务岗连接上，可以点击快速启动，不需要跳转到机械手app去启动
                     isFirstConnectAccessbilityService = false;
                     startTask(taskInfo.getAppInfos());
-                } else if(isStarted) {
+                } else if (isStarted) {
                     // 已启动，则点击会触发暂停
                     if (TaskExecutor.getInstance().isForcePause()) {
                         TaskExecutor.getInstance().setForcePause(false);
